@@ -1,2 +1,6 @@
 # WorkBuddy 项目数据（本地记忆与会话配置），不纳入版本控制
 .workbuddy/
+
+# Windows 原生 Jekyll 本地构建：工具链与构建产物，不纳入版本控制
+.tools/
+.site-local/
