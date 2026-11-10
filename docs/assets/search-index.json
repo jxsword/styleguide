@@ -1,0 +1,20 @@
+---
+layout: null
+---
+[
+{%- assign first = true -%}
+{%- assign idx = site.pages | sort: "url" -%}
+{%- for p in idx -%}
+  {%- if p.url contains "/assets/" or p.url contains "/include/" or p.name == "decision_log.md" or p.url == "/index.html" -%}
+  {%- else -%}
+    {%- unless first -%},{%- endunless -%}
+    {%- assign first = false -%}
+    {
+      "title": {{ p.title | default: p.name | jsonify }},
+      "url": {{ p.url | relative_url | jsonify }},
+      "group": {{ p.dir | default: "/" | jsonify }},
+      "excerpt": {{ p.content | default: "" | strip_html | strip_newlines | truncate: 500, '' | jsonify }}
+    }
+  {%- endif -%}
+{%- endfor -%}
+]

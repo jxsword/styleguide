@@ -1,0 +1,99 @@
+/* 中文站布局：沿用上游主题样式，仅增加侧栏与搜索容器 */
+.zh-shell { display: block; }
+
+.zh-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 280px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding: 20px 16px;
+  background: #f7f8fa;
+  border-right: 1px solid #e1e4e8;
+  font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+}
+
+.zh-main { margin-left: 280px; padding: 24px 32px; max-width: 1100px; }
+
+.zh-brand {
+  display: block;
+  margin-bottom: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #24292f;
+  text-decoration: none;
+}
+
+.zh-search input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #d0d7de;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.zh-results {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.zh-results li { padding: 4px 0; }
+.zh-results a { color: #0969da; font-size: 13px; text-decoration: none; }
+
+.zh-group-title {
+  margin: 16px 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #57606a;
+}
+
+.zh-nav-link {
+  display: block;
+  padding: 4px 8px;
+  border-radius: 5px;
+  color: #24292f;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.zh-nav-link:hover { background: #eaeef2; }
+.zh-nav-link.is-active { background: #ddf4ff; color: #0969da; }
+
+.zh-legal {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #d8dee4;
+  font-size: 11px;
+  color: #57606a;
+}
+
+.zh-legal p { margin: 4px 0; }
+.zh-legal a { color: #0969da; }
+.zh-toggle { display: none; }
+
+@media (max-width: 900px) {
+  .zh-sidebar {
+    z-index: 20;
+    transform: translateX(-100%);
+    transition: transform .2s ease;
+  }
+  .zh-sidebar.is-open { transform: translateX(0); }
+  .zh-main { margin-left: 0; padding: 16px; }
+  .zh-toggle {
+    display: block;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 30;
+    padding: 6px 10px;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    background: #fff;
+  }
+}

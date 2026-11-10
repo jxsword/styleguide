@@ -1,0 +1,34 @@
+# 与上游 google/styleguide/_config.yml 保持一致的渲染配置。
+# 上游原文仅有 title + kramdown.parse_block_html，用于渲染 <div>/<details> 块。
+title: Google 风格指南（中文翻译）
+description: Google Style Guides 非官方中文翻译
+
+kramdown:
+  parse_block_html: true
+
+url: https://jxsword.github.io
+baseurl: /styleguide
+
+# 侧边导航与搜索由 Jekyll 内置能力提供，不引入插件或构建脚本。
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: docs
+  - scope:
+      path: "assets"
+    values:
+      layout: null
+
+# Jekyll 3.10 的 exclude 会替换默认列表，须连同默认项一并列出。
+exclude:
+  - decision_log.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle
+  - vendor/cache
+  - vendor/gems
+  - vendor/ruby
+  - .sass-cache
+  - .jekyll-cache

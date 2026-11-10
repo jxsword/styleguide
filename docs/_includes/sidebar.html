@@ -1,0 +1,12 @@
+<nav class="zh-nav" aria-label="指南目录">
+{%- assign nav_items = site.pages | sort: "url" -%}
+{%- for p in nav_items -%}
+  {%- assign skip = false -%}
+  {%- if p.url contains "/assets/" or p.url contains "/include/" or p.name == "decision_log.md" or p.url == "/index.html" -%}
+    {%- assign skip = true -%}
+  {%- endif -%}
+  {%- unless skip -%}
+  <a class="zh-nav-link" data-group="{{ p.dir | default: "/" }}" href="{{ p.url | relative_url }}">{{ p.title | default: p.name }}</a>
+  {%- endunless -%}
+{%- endfor -%}
+</nav>

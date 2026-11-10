@@ -1,0 +1,22 @@
+---
+layout: default
+---
+<div class="zh-shell">
+  <button class="zh-toggle" id="zh-toggle" type="button" aria-label="切换导航">目录</button>
+  <aside class="zh-sidebar" id="zh-sidebar">
+    <a class="zh-brand" href="{{ site.baseurl }}/">Google 风格指南 · 中文</a>
+    <div class="zh-search">
+      <input id="zh-search-input" type="search" placeholder="搜索指南…" autocomplete="off" aria-label="站内搜索">
+      <ul id="zh-search-results" class="zh-results"></ul>
+    </div>
+    {% include sidebar.html %}
+    <div class="zh-legal">
+      <p>非官方中文翻译，规范以 <a href="https://github.com/google/styleguide">英文原文</a> 为准。</p>
+      <p>原文文档 <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>；代码示例 Apache 2.0。</p>
+      <p>对应上游提交 <code>7237268</code>（2026-11-09）。</p>
+    </div>
+  </aside>
+  <main class="zh-main" id="zh-main">
+    {{ content }}
+  </main>
+</div>
