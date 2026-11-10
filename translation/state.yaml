@@ -1,4 +1,3 @@
-# 翻译基线。由 scripts/gen_state.py 生成，勿手工编辑。
 baseline: 72372684427af9861212ee7f1cdbb48b6f497857
 baseline_date: 2026-11-09
 source_root: .
@@ -9,55 +8,55 @@ files:
     status: done
   cppguide.md:
     blob: 80715ff63366131325f57822a024584483199a19
-    status: pending
+    status: done
   csharpguide.md:
     blob: c8f224a15746e6fc1deffed030e0208096f502b3
     status: done
   haskellguide.md:
     blob: 10e577f8319d85171ea4fc0db00ec4bff57c5a36
-    status: pending
+    status: done
   htmlcssguide.md:
     blob: ca3685fb831b561c8e2b25138e6ac9830e4d69d3
-    status: pending
+    status: done
   javaguide.md:
     blob: 0f48e60891b0499f556d38458435779dc70afbde
-    status: pending
+    status: done
   jsguide.md:
     blob: 6e0342d95deb5129a12aae6bbdb8deab6298bcd4
-    status: pending
+    status: done
   jsoncguide.md:
     blob: 7876abb8be5ad2a1c25afc771c7872ef7f73015c
-    status: pending
+    status: done
   lispguide.md:
     blob: 385e6b1b29d51d35099ced49abdfc548c236afae
-    status: pending
+    status: done
   lispprogrammingguide.md:
     blob: 5a7a36369f705b9450db10f63d01e04b6d91c9b6
-    status: pending
+    status: done
   objcguide.md:
     blob: e0bfd222b4586d4fd4e0f7c57edeaeb46f901c9b
-    status: pending
+    status: done
   pyguide.md:
     blob: 23168765ad91aef93b50fdf9e6fc2af36fff21b6
-    status: pending
+    status: done
   rustguide.md:
     blob: 814e66426f47cb32c8d0162a849a5aba5e05f7a1
-    status: pending
+    status: done
   shellguide.md:
     blob: c8ad8444f9829dbe2681d39b91560ed2ae9d4541
-    status: pending
+    status: done
   tsguide.md:
     blob: 89c4630754647df4b2dc3ebabef33276f6eeece1
-    status: pending
+    status: done
   verilogguide.md:
     blob: 2d18df197146a840536adce34621ed1bbfc3645d
-    status: pending
+    status: done
   vimscriptfull.md:
     blob: ebc69aa3a8a54c1a7fd1c27bccf99a432d6ef299
-    status: pending
+    status: done
   vimscriptguide.md:
     blob: 3a304ec2d4d7279b693d950fe8e38f7b1e97ea54
-    status: pending
+    status: done
   xmlguide.md:
     blob: 9ac8205b936ac45b326f2ba4597a8bcbdbb985b8
     status: done
@@ -75,16 +74,16 @@ files:
     status: done
   docguide/style.md:
     blob: 16cff7afa5eade35ae298e6bb575451fd98074d7
-    status: pending
+    status: done
   go/best-practices.md:
     blob: 0d621d8bca6e0f276cb123f6d66ebefa8d14a2fd
-    status: pending
+    status: done
   go/decisions.md:
     blob: 413de1e57d39223b0a309841b2251cc2dea0a487
-    status: pending
+    status: done
   go/guide.md:
     blob: f5b7e593bc5b5b4c589c555c6e990fbbb5df8512
-    status: pending
+    status: done
   go/index.md:
     blob: fabc14fd6d9dd39e6dbb552eeedc61763469d45d
-    status: pending
+    status: done

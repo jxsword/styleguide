@@ -2,6 +2,7 @@
 # 上游原文仅有 title + kramdown.parse_block_html，用于渲染 <div>/<details> 块。
 title: Google 风格指南（中文翻译）
 description: Google Style Guides 非官方中文翻译
+theme: jekyll-theme-primer
 
 kramdown:
   parse_block_html: true
