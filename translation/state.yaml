@@ -1,18 +1,18 @@
 # 翻译基线。由 scripts/gen_state.py 生成，勿手工编辑。
-baseline: be345bc197eda85a68b545872aa7a04214cc05b9
-baseline_date: 2026-11-11
+baseline: 72372684427af9861212ee7f1cdbb48b6f497857
+baseline_date: 2026-11-09
 source_root: .
 target_root: docs
 files:
   Rguide.md:
     blob: 774b57d7e135b665fba57d7660951c9682ede1b1
-    status: pending
+    status: done
   cppguide.md:
     blob: 80715ff63366131325f57822a024584483199a19
     status: pending
   csharpguide.md:
     blob: c8f224a15746e6fc1deffed030e0208096f502b3
-    status: pending
+    status: done
   haskellguide.md:
     blob: 10e577f8319d85171ea4fc0db00ec4bff57c5a36
     status: pending
@@ -60,19 +60,19 @@ files:
     status: pending
   xmlguide.md:
     blob: 9ac8205b936ac45b326f2ba4597a8bcbdbb985b8
-    status: pending
+    status: done
   docguide/README.md:
     blob: 017ea613237ccc288cfa47f9e23b877496638a6d
-    status: pending
+    status: done
   docguide/READMEs.md:
     blob: 3564564a3684225cdf8057f30e50335fb56c9dfd
-    status: pending
+    status: done
   docguide/best_practices.md:
     blob: 68113ff259386f8a9b0b54bbe8f64ca9dc08650b
-    status: pending
+    status: done
   docguide/philosophy.md:
     blob: 9f4f1b76af5eb10c60d82bf123a46e0f5b22f6cb
-    status: pending
+    status: done
   docguide/style.md:
     blob: 16cff7afa5eade35ae298e6bb575451fd98074d7
     status: pending

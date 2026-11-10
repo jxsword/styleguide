@@ -19,9 +19,15 @@ files = sorted(
 )
 files = [f for f in files if f not in ("CODE_OF_CONDUCT.md", "README.md")]
 
-head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+# 基线必须是上游 gh-pages 的提交，而不是本地 main 的 HEAD：
+# 增量翻译要 diff 的是 upstream 的文档变化。
+head = subprocess.check_output(
+    ["git", "rev-parse", "upstream/gh-pages"], cwd=ROOT, text=True
+).strip()
 date = subprocess.check_output(
-    ["git", "log", "-1", "--format=%ad", "--date=short"], cwd=ROOT, text=True
+    ["git", "log", "-1", "--format=%ad", "--date=short", "upstream/gh-pages"],
+    cwd=ROOT,
+    text=True,
 ).strip()
 
 lines = [
