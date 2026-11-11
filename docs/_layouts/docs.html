@@ -1,23 +1,38 @@
 ---
-layout: default
+layout: none
 ---
-<div class="zh-shell">
-  <button class="zh-toggle" id="zh-toggle" type="button" aria-label="切换导航">目录</button>
-  <aside class="zh-sidebar" id="zh-sidebar">
-    <a class="zh-brand" href="{{ site.baseurl }}/">Google 风格指南 · 中文</a>
-    <div class="zh-search">
-      <input id="zh-search-input" type="search" placeholder="搜索指南…" autocomplete="off" aria-label="站内搜索">
-      <ul id="zh-search-results" class="zh-results"></ul>
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "zh-CN" }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% seo %}
+    <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
+    {% include head-custom.html %}
+  </head>
+  <body>
+    <div class="zh-shell">
+      <button class="zh-toggle" id="zh-toggle" type="button" aria-label="切换导航">目录</button>
+      <aside class="zh-sidebar" id="zh-sidebar">
+        <a class="zh-brand" href="{{ site.baseurl }}/">Google 风格指南 · 中文</a>
+        <div class="zh-search">
+          <input id="zh-search-input" type="search" placeholder="搜索指南…" autocomplete="off" aria-label="站内搜索">
+          <ul id="zh-search-results" class="zh-results"></ul>
+        </div>
+        {% include sidebar.html %}
+        <div class="zh-legal">
+          <p>非官方中文翻译，规范以 <a href="https://github.com/google/styleguide">英文原文</a> 为准。</p>
+          <p>原文文档 <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>；代码示例 Apache 2.0。</p>
+          <p>对应上游提交 <code>7237268</code>（2026-11-09）。</p>
+        </div>
+      </aside>
+      <main class="zh-main markdown-body" id="zh-main">
+        {{ content }}
+      </main>
+      <aside class="zh-toc" id="zh-toc" aria-label="本页目录"></aside>
     </div>
-    {% include sidebar.html %}
-    <div class="zh-legal">
-      <p>非官方中文翻译，规范以 <a href="https://github.com/google/styleguide">英文原文</a> 为准。</p>
-      <p>原文文档 <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>；代码示例 Apache 2.0。</p>
-      <p>对应上游提交 <code>7237268</code>（2026-11-09）。</p>
-    </div>
-  </aside>
-  <main class="zh-main" id="zh-main">
-    {{ content }}
-  </main>
-  <aside class="zh-toc" id="zh-toc" aria-label="本页目录"></aside>
-</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>
