@@ -167,3 +167,121 @@
     links.forEach(function (o) { observer.observe(o.heading); });
   }
 })();
+
+/* ===== 代码块增强：行号 + 复制按钮 + “已复制”提示 ===== */
+(function () {
+  "use strict";
+
+  var main = document.querySelector(".zh-main");
+  if (!main) { return; }
+
+  var toastEl = null;
+  function showToast(msg) {
+    if (!toastEl) {
+      toastEl = document.createElement("div");
+      toastEl.className = "zh-toast";
+      toastEl.setAttribute("role", "status");
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    void toastEl.offsetWidth; // 强制重排以重启过渡
+    toastEl.classList.add("is-visible");
+    clearTimeout(toastEl._t);
+    toastEl._t = setTimeout(function () { toastEl.classList.remove("is-visible"); }, 1500);
+  }
+
+  function copyText(text, btn) {
+    function ok() {
+      showToast("已复制");
+      var prev = btn.textContent;
+      btn.textContent = "已复制";
+      btn.classList.add("is-copied");
+      setTimeout(function () {
+        btn.textContent = prev;
+        btn.classList.remove("is-copied");
+      }, 1500);
+    }
+    function fallback() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.top = "-9999px";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) { /* 忽略 */ }
+      document.body.removeChild(ta);
+      ok();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(ok).catch(fallback);
+    } else {
+      fallback();
+    }
+  }
+
+  var pres = main.querySelectorAll("pre");
+  Array.prototype.forEach.call(pres, function (pre) {
+    if (pre.closest && pre.closest(".zh-codeblock")) { return; } // 防御重复处理
+
+    var codeEl = pre.querySelector("code") || pre;
+    var text = (codeEl.textContent || "").replace(/\n$/, "");
+    var lines = text.split("\n");
+    if (lines.length === 1 && !text.trim()) { return; } // 跳过空块
+
+    var gutter = document.createElement("pre");
+    gutter.className = "zh-ln";
+    gutter.setAttribute("aria-hidden", "true");
+    var gcode = document.createElement("code");
+    gcode.textContent = lines.map(function (_, i) { return i + 1; }).join("\n");
+    gutter.appendChild(gcode);
+
+    var wrap = document.createElement("div");
+    wrap.className = "zh-codeblock";
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "zh-copy-btn";
+    btn.textContent = "复制";
+    btn.setAttribute("aria-label", "复制代码");
+
+    var inner = document.createElement("div");
+    inner.className = "zh-code-inner";
+    inner.appendChild(gutter);
+
+    var parent = pre.parentNode;
+    parent.insertBefore(wrap, pre); // 在原 <pre> 位置插入外层容器
+    inner.appendChild(pre);         // 原 <pre> 移入 inner（与行号并列）
+    wrap.appendChild(btn);
+    wrap.appendChild(inner);
+
+    btn.addEventListener("click", function (e) {
+      e.preventDefault();
+      copyText(text, btn);
+    });
+  });
+})();
+
+/* ===== 主题切换（深色 / 浅色） ===== */
+(function () {
+  "use strict";
+
+  var btn = document.getElementById("zh-theme-toggle");
+  if (!btn) { return; }
+  var label = btn.querySelector(".zh-theme-label");
+
+  function sync() {
+    var t = document.documentElement.getAttribute("data-theme") || "light";
+    if (label) { label.textContent = t === "dark" ? "浅色" : "深色"; }
+    btn.setAttribute("aria-label", t === "dark" ? "切换到浅色主题" : "切换到深色主题");
+  }
+  sync();
+
+  btn.addEventListener("click", function () {
+    var cur = document.documentElement.getAttribute("data-theme") || "light";
+    var next = cur === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("zh-theme", next); } catch (e) {}
+    sync();
+  });
+})();

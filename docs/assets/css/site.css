@@ -1,6 +1,81 @@
 /* 中文站布局：沿用上游主题样式，仅增加侧栏与搜索容器 */
 .zh-shell { display: block; }
 
+/* ===== 主题变量（浅色为默认，[data-theme="dark"] 覆盖） ===== */
+:root {
+  --zh-bg: #ffffff;
+  --zh-fg: #24292f;
+  --zh-muted: #57606a;
+  --zh-border: #d0d7de;
+  --zh-sidebar-bg: #f7f8fa;
+  --zh-hover-bg: #eaeef2;
+  --zh-active-bg: #ddf4ff;
+  --zh-accent: #0969da;
+  --zh-code-bg: #f6f8fa;
+  --zh-code-border: #d0d7de;
+  --zh-gutter-bg: #f6f8fa;
+  --zh-gutter-fg: #8c959f;
+  --zh-gutter-border: #d0d7de;
+  --zh-btn-bg: rgba(255, 255, 255, 0.92);
+  --zh-btn-fg: #57606a;
+  --zh-btn-border: rgba(27, 31, 36, 0.15);
+  --zh-toast-bg: #24292f;
+  --zh-toast-fg: #ffffff;
+  --zh-inline-code-bg: rgba(175, 184, 193, 0.20);
+  --zh-selection: #b6dcff;
+  --zh-markdown-border: #d0d7de;
+  --zh-markdown-quote: #6e7781;
+  --zh-markdown-table-stripe: #f6f8fa;
+  --zh-markdown-hr: #d0d7de;
+  --zh-toggle-bg: #ffffff;
+}
+
+[data-theme="dark"] {
+  --zh-bg: #0d1117;
+  --zh-fg: #c9d1d9;
+  --zh-muted: #8b949e;
+  --zh-border: #30363d;
+  --zh-sidebar-bg: #161b22;
+  --zh-hover-bg: #21262d;
+  --zh-active-bg: #1f3056;
+  --zh-accent: #58a6ff;
+  --zh-code-bg: #161b22;
+  --zh-code-border: #30363d;
+  --zh-gutter-bg: #161b22;
+  --zh-gutter-fg: #484f58;
+  --zh-gutter-border: #30363d;
+  --zh-btn-bg: rgba(22, 27, 34, 0.92);
+  --zh-btn-fg: #c9d1d9;
+  --zh-btn-border: #30363d;
+  --zh-toast-bg: #c9d1d9;
+  --zh-toast-fg: #0d1117;
+  --zh-inline-code-bg: rgba(110, 118, 129, 0.40);
+  --zh-selection: #1f6feb;
+  --zh-markdown-border: #30363d;
+  --zh-markdown-quote: #8b949e;
+  --zh-markdown-table-stripe: #161b22;
+  --zh-markdown-hr: #30363d;
+  --zh-toggle-bg: #21262d;
+  /* 覆盖 mdguide 的 callout 变量（其默认按 prefers-color-scheme 取浅色值） */
+  --goodcode-bg-color: #1b2e1b;
+  --badcode-bg-color: #2e1b1b;
+  --callout-important-bg-color: #2d2420;
+  --callout-note-bg-color: #15212b;
+  --callout-tip-bg-color: #132524;
+  --callout-warning-bg-color: #2b1d1a;
+  --callout-important-fg-color: #ff7b72;
+  --callout-note-fg-color: #58a6ff;
+  --callout-tip-fg-color: #3fb950;
+  --callout-warning-fg-color: #f0883e;
+  --callout-important-border-color: #ff7b72;
+  --callout-note-border-color: #58a6ff;
+  --callout-tip-border-color: #3fb950;
+  --callout-warning-border-color: #f0883e;
+}
+
+html, body { background: var(--zh-bg); }
+body { color: var(--zh-fg); }
+
 .zh-sidebar {
   position: fixed;
   top: 0;
@@ -10,8 +85,8 @@
   box-sizing: border-box;
   overflow-y: auto;
   padding: 20px 16px;
-  background: #f7f8fa;
-  border-right: 1px solid #e1e4e8;
+  background: var(--zh-sidebar-bg);
+  border-right: 1px solid var(--zh-border);
   font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
 }
 
@@ -22,7 +97,7 @@
   margin-bottom: 16px;
   font-size: 15px;
   font-weight: 600;
-  color: #24292f;
+  color: var(--zh-fg);
   text-decoration: none;
 }
 
@@ -30,55 +105,142 @@
   width: 100%;
   box-sizing: border-box;
   padding: 8px 10px;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--zh-border);
   border-radius: 6px;
   font-size: 13px;
+  background: var(--zh-bg);
+  color: var(--zh-fg);
 }
 
-.zh-results {
-  list-style: none;
-  margin: 6px 0 0;
-  padding: 0;
-  max-height: 280px;
-  overflow-y: auto;
-}
-
+.zh-results { list-style: none; margin: 6px 0 0; padding: 0; max-height: 280px; overflow-y: auto; }
 .zh-results li { padding: 4px 0; }
-.zh-results a { color: #0969da; font-size: 13px; text-decoration: none; }
+.zh-results a { color: var(--zh-accent); font-size: 13px; text-decoration: none; }
 
-.zh-group-title {
-  margin: 16px 0 6px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #57606a;
-}
+.zh-group-title { margin: 16px 0 6px; font-size: 12px; font-weight: 600; color: var(--zh-muted); }
 
 .zh-nav-link {
   display: block;
   padding: 4px 8px;
   border-radius: 5px;
-  color: #24292f;
+  color: var(--zh-fg);
   font-size: 13px;
   text-decoration: none;
 }
+.zh-nav-link:hover { background: var(--zh-hover-bg); }
+.zh-nav-link.is-active { background: var(--zh-active-bg); color: var(--zh-accent); }
 
-.zh-nav-link:hover { background: #eaeef2; }
-.zh-nav-link.is-active { background: #ddf4ff; color: #0969da; }
-
-.zh-legal {
-  margin-top: 24px;
-  padding-top: 12px;
-  border-top: 1px solid #d8dee4;
-  font-size: 11px;
-  color: #57606a;
-}
-
+.zh-legal { margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--zh-border); font-size: 11px; color: var(--zh-muted); }
 .zh-legal p { margin: 4px 0; }
-.zh-legal a { color: #0969da; }
+.zh-legal a { color: var(--zh-accent); }
 .zh-toggle { display: none; }
 
+/* ===== 主题切换按钮 ===== */
+.zh-theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 7px 10px;
+  border: 1px solid var(--zh-border);
+  border-radius: 6px;
+  background: var(--zh-toggle-bg);
+  color: var(--zh-fg);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.zh-theme-toggle:hover { background: var(--zh-hover-bg); }
+.zh-theme-toggle svg { width: 16px; height: 16px; flex: none; stroke: currentColor; fill: none; }
+.zh-theme-toggle .zh-icon-sun { display: none; }
+[data-theme="dark"] .zh-theme-toggle .zh-icon-sun { display: inline; }
+[data-theme="dark"] .zh-theme-toggle .zh-icon-moon { display: none; }
+
+/* ===== 代码块：行号 + 复制按钮 ===== */
+.zh-codeblock {
+  position: relative;
+  margin: 0 0 16px;
+  border: 1px solid var(--zh-code-border);
+  border-radius: 6px;
+  background: var(--zh-code-bg);
+}
+.zh-code-inner {
+  display: flex;
+  max-height: 520px;
+  overflow: auto;
+  border-radius: 6px;
+}
+.zh-ln {
+  flex: none;
+  margin: 0;
+  padding: 16px 10px 16px 16px;
+  background: var(--zh-gutter-bg);
+  border-right: 1px solid var(--zh-gutter-border);
+  color: var(--zh-gutter-fg);
+  text-align: right;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 85%;
+  line-height: 1.45;
+  white-space: pre;
+  user-select: none;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+.zh-code-inner > pre.highlight,
+.zh-code-inner > pre {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  overflow: visible;
+}
+.zh-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  padding: 4px 10px;
+  border: 1px solid var(--zh-btn-border);
+  border-radius: 6px;
+  background: var(--zh-btn-bg);
+  color: var(--zh-btn-fg);
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity .15s ease, background .15s ease;
+}
+.zh-codeblock:hover .zh-copy-btn,
+.zh-copy-btn:focus { opacity: 1; }
+.zh-copy-btn:hover { background: var(--zh-hover-bg); }
+.zh-copy-btn.is-copied { color: #1a7f37; border-color: #1a7f37; }
+
+/* goodcode/badcode 块右上角有 ✅/❌ 角标，复制按钮下移避免重叠 */
+div.highlighter-rouge .zh-copy-btn { top: 34px; }
+
+/* “已复制”提示框 */
+.zh-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%) translateY(12px);
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: var(--zh-toast-bg);
+  color: var(--zh-toast-fg);
+  font-size: 13px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+  z-index: 999;
+}
+.zh-toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
 /* ===== 右侧本页目录（TOC） ===== */
-/* 默认隐藏，仅在宽屏（≥1200px）显示，避免与左侧栏争夺窄屏空间 */
 .zh-toc { display: none; }
 
 @media (min-width: 1200px) {
@@ -95,8 +257,8 @@
     padding: 24px 16px;
     overflow-y: auto;
     box-sizing: border-box;
-    background: #f7f8fa;
-    border-left: 1px solid #e1e4e8;
+    background: var(--zh-sidebar-bg);
+    border-left: 1px solid var(--zh-border);
     font: 13px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
     scrollbar-width: thin;
   }
@@ -107,7 +269,7 @@
   font-size: 12px;
   font-weight: 600;
   letter-spacing: .04em;
-  color: #57606a;
+  color: var(--zh-muted);
 }
 
 .zh-toc-list {
@@ -121,24 +283,24 @@
   padding: 3px 8px;
   border-radius: 5px;
   border-left: 2px solid transparent;
-  color: #57606a;
+  color: var(--zh-muted);
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.zh-toc-link:hover { background: #eaeef2; color: #24292f; }
+.zh-toc-link:hover { background: var(--zh-hover-bg); color: var(--zh-fg); }
 .zh-toc-link.is-active {
-  background: #ddf4ff;
-  color: #0969da;
-  border-left-color: #0969da;
+  background: var(--zh-active-bg);
+  color: var(--zh-accent);
+  border-left-color: var(--zh-accent);
 }
 
-.zh-toc-lvl-1 { font-weight: 600; color: #24292f; }
+.zh-toc-lvl-1 { font-weight: 600; color: var(--zh-fg); }
 .zh-toc-lvl-2 { padding-left: 8px; }
 .zh-toc-lvl-3 { padding-left: 22px; font-size: 12.5px; }
-.zh-toc-lvl-4 { padding-left: 36px; color: #6e7781; font-size: 12px; }
+.zh-toc-lvl-4 { padding-left: 36px; color: var(--zh-muted); font-size: 12px; }
 
 @media (max-width: 900px) {
   .zh-sidebar {
@@ -155,8 +317,34 @@
     left: 10px;
     z-index: 30;
     padding: 6px 10px;
-    border: 1px solid #d0d7de;
+    border: 1px solid var(--zh-border);
     border-radius: 6px;
-    background: #fff;
+    background: var(--zh-toggle-bg);
+    color: var(--zh-fg);
   }
 }
+
+/* ===== 暗色模式：覆盖 primer markdown-body 默认浅色 ===== */
+[data-theme="dark"] .markdown-body { color: var(--zh-fg); background: transparent; }
+[data-theme="dark"] .markdown-body a { color: var(--zh-accent); }
+[data-theme="dark"] .markdown-body h1,
+[data-theme="dark"] .markdown-body h2,
+[data-theme="dark"] .markdown-body h3,
+[data-theme="dark"] .markdown-body h4,
+[data-theme="dark"] .markdown-body h5,
+[data-theme="dark"] .markdown-body h6 { color: var(--zh-fg); }
+[data-theme="dark"] .markdown-body h1,
+[data-theme="dark"] .markdown-body h2 { border-bottom-color: var(--zh-markdown-border); }
+[data-theme="dark"] .markdown-body code,
+[data-theme="dark"] .markdown-body tt { background-color: var(--zh-inline-code-bg); }
+[data-theme="dark"] .markdown-body pre { background-color: var(--zh-code-bg); }
+[data-theme="dark"] .markdown-body blockquote {
+  color: var(--zh-markdown-quote);
+  border-left-color: var(--zh-markdown-border);
+}
+[data-theme="dark"] .markdown-body table th,
+[data-theme="dark"] .markdown-body table td { border-color: var(--zh-markdown-border); }
+[data-theme="dark"] .markdown-body table tr:nth-child(2n) { background-color: var(--zh-markdown-table-stripe); }
+[data-theme="dark"] .markdown-body hr { background-color: var(--zh-markdown-hr); }
+[data-theme="dark"] .markdown-body img { background-color: transparent; }
+[data-theme="dark"] ::selection { background: var(--zh-selection); }
