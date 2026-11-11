@@ -171,13 +171,13 @@ body { color: var(--zh-fg); }
   border-radius: 6px;
 }
 .zh-ln {
-  flex: none;
+  flex: none !important;
   margin: 0;
-  padding: 16px 12px;
+  padding: 16px 10px !important;
   background: var(--zh-gutter-bg);
   border-right: 1px solid var(--zh-gutter-border);
   color: var(--zh-gutter-fg);
-  text-align: right;
+  text-align: left;
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   font-size: 85%;
   line-height: 1.45;
@@ -187,8 +187,7 @@ body { color: var(--zh-fg); }
   left: 0;
   z-index: 1;
 }
-.zh-code-inner > pre.highlight,
-.zh-code-inner > pre {
+.zh-code-inner > pre:not(.zh-ln) {
   flex: 1 1 auto;
   min-width: 0;
   margin: 0 !important;
