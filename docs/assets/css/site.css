@@ -173,7 +173,7 @@ body { color: var(--zh-fg); }
 .zh-ln {
   flex: none;
   margin: 0;
-  padding: 16px 10px 16px 16px;
+  padding: 16px 12px;
   background: var(--zh-gutter-bg);
   border-right: 1px solid var(--zh-gutter-border);
   color: var(--zh-gutter-fg);
@@ -192,15 +192,17 @@ body { color: var(--zh-fg); }
   flex: 1 1 auto;
   min-width: 0;
   margin: 0 !important;
-  border: 0 !important;
+  /* 覆盖 primer 的 `.highlight pre, pre { padding: 16px }`，否则代码会在块内被额外缩进 */
+  padding: 16px 16px 16px 0 !important;
+  border: 0;
   border-radius: 0 !important;
   background: transparent !important;
   overflow: visible;
 }
 .zh-copy-btn {
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 6px;
+  right: 6px;
   z-index: 2;
   padding: 4px 10px;
   border: 1px solid var(--zh-btn-border);
@@ -218,8 +220,9 @@ body { color: var(--zh-fg); }
 .zh-copy-btn:hover { background: var(--zh-hover-bg); }
 .zh-copy-btn.is-copied { color: #1a7f37; border-color: #1a7f37; }
 
-/* goodcode/badcode 块右上角有 ✅/❌ 角标，复制按钮下移避免重叠 */
-div.highlighter-rouge .zh-copy-btn { top: 34px; }
+/* goodcode/badcode 块右上角有 ✅/❌ 角标，复制按钮下移避免重叠（仅限带角标的块） */
+div.goodcode + div.highlighter-rouge .zh-copy-btn,
+div.badcode + div.highlighter-rouge .zh-copy-btn { top: 34px; right: 6px; }
 
 /* “已复制”提示框 */
 .zh-toast {
