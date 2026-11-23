@@ -2,7 +2,7 @@
 """生成翻译基线元数据：
 
 1. translation/state.yaml —— 基线提交 + 每份源文件的 blob 哈希（增量翻译依据）。
-2. docs/_data/upstream.yml —— 供 Jekyll 页脚渲染的上游提交信息（本地与 GitHub Pages 构建一致读取）。
+2. zh-docs/_data/upstream.yml —— 供 Jekyll 页脚渲染的上游提交信息（本地与 GitHub Pages 构建一致读取）。
 """
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "translation" / "state.yaml"
-DATA_OUT = ROOT / "docs" / "_data" / "upstream.yml"
+DATA_OUT = ROOT / "zh-docs" / "_data" / "upstream.yml"
 UPSTREAM_REPO_URL = "https://github.com/google/styleguide"
 
 files = sorted(
@@ -41,13 +41,13 @@ lines = [
     f"baseline: {head}",
     f"baseline_date: {date}",
     "source_root: .",
-    "target_root: docs",
+    "target_root: zh-docs",
     "files:",
 ]
 for rel in files:
     data = (ROOT / rel).read_bytes()
     sha = hashlib.sha1(b"blob %d\0" % len(data) + data).hexdigest()
-    target = ROOT / "docs" / rel
+    target = ROOT / "zh-docs" / rel
     status = "done" if target.exists() else "pending"
     lines.append(f"  {rel}:")
     lines.append(f"    blob: {sha}")
@@ -69,5 +69,5 @@ DATA_OUT.write_text("\n".join(data_lines) + "\n", encoding="utf-8")
 
 print(
     f"state.yaml: {len(files)} files, baseline {head[:12]} ({date})"
-    f" | docs/_data/upstream.yml updated"
+    f" | zh-docs/_data/upstream.yml updated"
 )

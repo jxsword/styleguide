@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT
-TARGET = ROOT / "docs"
+TARGET = ROOT / "zh-docs"
 
 PATTERNS = {
     "headings": re.compile(r"^\s{0,3}#{1,6}\s", re.M),

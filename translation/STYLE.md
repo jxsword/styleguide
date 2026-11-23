@@ -1,6 +1,11 @@
 # 翻译规范（S2 全量翻译）
 
-译文是 `google/styleguide` 最新代码的逐行对应中文版，文件名与目录结构与上游完全一致，统一放在 `docs/` 下。
+译文是 `google/styleguide` 最新代码的逐行对应中文版，文件名与目录结构与上游完全一致，统一放在 `zh-docs/` 下。
+
+## 上游同步范围（防止 CI/配置文件误引入）
+
+- 同步仅拉取上游文档：根目录 `*.md` 与 `go/`、`docguide/` 下的 `*.md`。
+- 上游的 `.github/`、`assets/`、`include/` 等其他文件一律**不拉取**（本仓库自有 CI 为 `.github/workflows/zh-pages-deploy.yml`，防御性命名避免与上游同名冲突）。
 
 ## 必须原样保留，不得改写
 

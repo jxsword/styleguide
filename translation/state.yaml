@@ -2,7 +2,7 @@
 baseline: 72372684427af9861212ee7f1cdbb48b6f497857
 baseline_date: 2026-11-09
 source_root: .
-target_root: docs
+target_root: zh-docs
 files:
   Rguide.md:
     blob: 774b57d7e135b665fba57d7660951c9682ede1b1

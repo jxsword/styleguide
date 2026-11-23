@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""按 .tools/parts/manifest.json 把已翻译片段合并回 docs/<原路径>。
+"""按 .tools/parts/manifest.json 把已翻译片段合并回 zh-docs/<原路径>。
 
 片段文件命名：part-NN.md -> part-NN.zh.md。使用二进制拼接，保留原始换行符。
 """
@@ -27,7 +27,7 @@ def main() -> None:
             chunks.append(zh.read_bytes())
         if len(chunks) != len(entries):
             continue
-        out = ROOT / "docs" / rel
+        out = ROOT / "zh-docs" / rel
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_bytes(b"".join(chunks))
         merged += 1

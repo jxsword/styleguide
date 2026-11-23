@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""分析 docs/ 译文中暴露给 Jekyll Liquid 解析、且未被 {% raw %} 保护的 {{ / {% 位置。"""
+"""分析 zh-docs/ 译文中暴露给 Jekyll Liquid 解析、且未被 {% raw %} 保护的 {{ / {% 位置。"""
 import re, glob, os
 
 files = []
-for f in glob.glob("docs/**/*.md", recursive=True):
+for f in glob.glob("zh-docs/**/*.md", recursive=True):
     if os.path.basename(f) in ("_config.yml", "index.md"):
         continue
     files.append(f)
@@ -32,6 +32,6 @@ for f in files:
         if trigger_re.search(ln) and not raw_open:
             exposed.append((i, "fence" if in_fence else "inline", ln.strip()[:95]))
     if exposed:
-        print("### " + f.replace("docs/", ""))
+        print("### " + f.replace("zh-docs/", ""))
         for i, kind, snip in exposed:
             print(f"   L{i:5d} [{kind}] {snip}")

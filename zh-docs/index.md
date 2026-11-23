@@ -16,8 +16,8 @@
 
 - 原文文档由 Google LLC 以 [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) 发布，代码示例为 Apache 2.0；本翻译沿用相同许可。
 - 本项目非 Google 官方项目，仅供学习参考。
-- 站内搜索使用自托管的 [Fuse.js](https://www.fusejs.io/) v7.1.0（Apache-2.0），许可文本见仓库 `docs/assets/js/FUSE-LICENSE.txt`。
+- 站内搜索使用自托管的 [Fuse.js](https://www.fusejs.io/) v7.1.0（Apache-2.0），许可文本见仓库 `zh-docs/assets/js/FUSE-LICENSE.txt`。
 
 ## 相关决策
 
-仓库 `docs/decision_log.md` 记录了 DR-1（仓库拓扑）与 DR-2（发布源与检索方案）。
+仓库 `zh-docs/decision_log.md` 记录了 DR-1（仓库拓扑）与 DR-2（发布源与检索方案）。

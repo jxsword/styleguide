@@ -28,3 +28,12 @@
 - 理由：同步流程零新增步骤（`gen_state.py` 本就是第 4 步）；Pages legacy Jekyll 原生支持 `_data/`；页脚哈希顺带变为上游 commit 直链。
 - 影响：新增 `docs/_data/` 目录（Jekyll 保留目录，不入 `site.pages`，侧栏无变化）；`translation/state.yaml` 再生成时补回脚本注释头一行。
 - 时间/会话：2026-11-23，本次方案确认会话。
+
+## DR-4 2026-11-23 译文目录更名 zh-docs 并切换 Actions 部署 [状态:生效 替代 DR-2 发布源结论]
+- 背景：`docs/` 与上游未来可能在根目录新增的同名目录存在碰撞风险；而 Pages legacy 发布目录仅允许 `/` 或 `/docs`（配置文档与 REST API `source.path` 双重限制，官方文档原文），故更名必须伴随发布方式切换。
+- 选项与权衡：A 更名 + GitHub Actions（官方 `actions/jekyll-build-pages`，与 legacy 同用 pages-gem，渲染一致）选用；B 保持 `docs/` 不动——碰撞风险仅延迟不消除，弃用；C git 符号链接 `docs → zh-docs` 保 legacy——官方文档明确 legacy 构建不支持符号链接，排除；D 源改 `/`(root) + 维护 exclude——DR-2 已弃用的同路线，排除。
+- CI 冲突顾虑消解：上游同步为路径限定式（仅 `*.md`，见 STYLE.md 成文约定），上游 workflow 文件不会进入本仓库；Actions 只执行本仓库分支内的 workflow；workflow 防御性命名 `zh-pages-deploy.yml`。
+- 结论：目录 `docs/` → `zh-docs/`（git mv 保留历史，48 文件）；新增 `.github/workflows/zh-pages-deploy.yml`（source_dir 探测式兼容旧目录，切换全程零中断）；更新 check/gen_state/merge_translations/analyze_liquid/build.rb/STYLE.md/index.md 共 7 文件路径引用。
+- 理由：`zh-docs` 命名与上游目录空间隔离，消除碰撞隐患；Actions 部署换来源目录自由度与未来构建扩展通道；渲染器与 legacy 同源，行为漂移风险最小。
+- 影响：DR-2 的「Deploy from a branch → main:/docs」结论被替代；构建时长约 1 → 2 分钟；线上 URL（baseurl `/styleguide`）不变；本仓库 gh 命令须显式 `-R jxsword/styleguide`（双远程下 gh 会误选 upstream）。
+- 时间/会话：2026-11-23，本次方案确认会话。
