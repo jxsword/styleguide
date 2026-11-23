@@ -37,3 +37,11 @@
 - 理由：`zh-docs` 命名与上游目录空间隔离，消除碰撞隐患；Actions 部署换来源目录自由度与未来构建扩展通道；渲染器与 legacy 同源，行为漂移风险最小。
 - 影响：DR-2 的「Deploy from a branch → main:/docs」结论被替代；构建时长约 1 → 2 分钟；线上 URL（baseurl `/styleguide`）不变；本仓库 gh 命令须显式 `-R jxsword/styleguide`（双远程下 gh 会误选 upstream）。
 - 时间/会话：2026-11-23，本次方案确认会话。
+
+## DR-5 2026-11-23 工作手册入仓（zh-docs/README.md）与项目记忆持久化 [状态:生效]
+- 背景：增量翻译/部署/预览流程此前仅存于 agent 私有记忆（`.workbuddy/memory/`，被 gitignore）与历史对话，换 agent 或换机器即不可恢复；`.tools/`（162MB Ruby 及 49 个用户 gem）同样不入库，项目路径变化即构建能力丢失。
+- 选项与权衡（手册位置）：放 `zh-docs/README.md`（用户指定；exclude 防发布）选用；放仓库根其他名字弃用——偏离用户要求。记忆位置：新增仓库根 `project-memory/` 选用（仓库为权威、双写同步）；并入 `zh-docs/` 弃用——发布源不放内部资料；仅留 `.workbuddy/` 弃用——agent 绑定且不入库。
+- 依赖全局化：RubyInstaller 3.3.4-1 整体移至 `C:\Users\ysm\tools\`，`.tools/` 原位建 junction（`New-Item -ItemType Junction`，免管理员）指回；`build.rb` 的 `Dir.glob` 穿透 junction 实测有效。过程坑：跨卷 Move-Item 中途失败产生半移动状态，`robocopy /MOVE` 又因长路径/文件占用残留 `share/` 文档（对构建无用），最终删除残留后建 junction 成功。
+- 结论：新增 `zh-docs/README.md`（依赖安装含 gem 快照与 build.rb/_config.local.yml 全文、增量翻译、预览、部署、新会话提示词附录）；新增 `project-memory/`（README 约定 + 日志副本，任何 agent 通用）；`zh-docs/_config.yml` exclude 增 `README.md`；`.tools/_config.local.yml` 增 `baseurl: ""` 简化本地预览。
+- 影响：`.gitignore` 无变更；线上站点无变化（README 被 exclude）；任何 agent 凭仓库文件可独立完成全流程；本地预览免符号链接（`http://localhost:8124/<页面>`）。
+- 时间/会话：2026-11-23，本次方案确认会话。

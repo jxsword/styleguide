@@ -23,6 +23,7 @@ defaults:
 
 # Jekyll 3.10 的 exclude 会替换默认列表，须连同默认项一并列出。
 exclude:
+  - README.md
   - decision_log.md
   - Gemfile
   - Gemfile.lock
