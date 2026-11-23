@@ -1,0 +1,58 @@
+# 中文站部署：用官方 pages-gem 构建 zh-docs/（与 legacy Pages 同一渲染器），经 Actions 发布。
+# 目录探测：zh-docs 存在则用之，否则回退 docs —— 保证目录更名切换期间两次构建都能成功。
+# 命名说明：防御性命名（zh- 前缀），上游同步范围仅限 *.md，本文件不会被上游同名文件覆盖。
+
+name: Deploy zh-docs to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Determine source dir (zh-docs or legacy docs)
+        id: src
+        run: |
+          if [ -d zh-docs ]; then
+            echo "dir=zh-docs" >> "$GITHUB_OUTPUT"
+          else
+            echo "dir=docs" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build with Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./${{ steps.src.outputs.dir }}
+          destination: ./_site
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
