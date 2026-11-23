@@ -20,3 +20,11 @@
 - 理由：零新生成器、零构建脚本、零插件、零新分支；1,798 个 `<div>` 由 kramdown 原生渲染；搜索与侧栏由 Jekyll 内置 defaults/layout/Liquid 补齐。
 - 影响：S1 译文目录由 `zh-cn/` 调整为 `docs/`（DR-1 拓扑结论仍生效，仅目录名变更）；新增 `docs/_config.yml`、`_layouts/`、`_includes/`、`assets/` 及上游静态资源副本，S3 需比对上游 `_config.yml` 变更；Pages 设置（Source = Deploy from a branch → main /docs）待确认后启用。
 - 时间/会话：2026-11-11，本次调研与方案确认会话。
+
+## DR-3 2026-11-23 页脚上游提交信息自动生成 [状态:生效]
+- 背景：`docs/_layouts/docs.html` 页脚原为硬编码「对应上游提交 7237268（2026-11-09）」，上游同步后须手工改页脚与 state.yaml 两处，易漏易漂移。
+- 选项与权衡：A `gen_state.py` 顺带生成 `docs/_data/upstream.yml`、页脚模板读 `site.data.upstream` —— 本地与 Pages 构建一致、数据与模板分离，选用；B 脚本字符串改写布局文件 —— 生成内容混入手工维护模板，易被后续编辑覆盖，弃用；C 运行时由 git 元数据推导（`site.github`）—— Pages 构建环境无 upstream 远端，`build_revision` 是本仓库提交而非上游，语义不可行，弃用。
+- 结论：采用 A。数据文件含 commit/short/date/url 四字段；页脚改 Liquid 读取，数据文件缺失时兜底提示运行 `scripts/gen_state.py`。
+- 理由：同步流程零新增步骤（`gen_state.py` 本就是第 4 步）；Pages legacy Jekyll 原生支持 `_data/`；页脚哈希顺带变为上游 commit 直链。
+- 影响：新增 `docs/_data/` 目录（Jekyll 保留目录，不入 `site.pages`，侧栏无变化）；`translation/state.yaml` 再生成时补回脚本注释头一行。
+- 时间/会话：2026-11-23，本次方案确认会话。

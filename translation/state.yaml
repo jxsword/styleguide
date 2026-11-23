@@ -1,3 +1,4 @@
+# 翻译基线。由 scripts/gen_state.py 生成，勿手工编辑。
 baseline: 72372684427af9861212ee7f1cdbb48b6f497857
 baseline_date: 2026-11-09
 source_root: .
