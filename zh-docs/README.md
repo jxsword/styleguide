@@ -113,6 +113,20 @@ webrick (1.9.2)
 
 </details>
 
+### `.tools/Gemfile` 来源与用途
+
+**来源**：手工创建，记录本地构建的**顶层直接依赖**（非完整依赖树）：
+
+```ruby
+source 'https://rubygems.org'
+gem 'github-pages', '232', group: :jekyll_plugins
+```
+
+**用途**：
+- 给 **Bundler** 用（`bundle install`），但本项目**未使用 Bundler**——`build.rb` 通过 `$LOAD_PATH` 直接把已解压 gem 的 `lib/` 加载到 Ruby 进程，完全绕过 Bundler。
+- 保留它的唯一价值：**作为“需安装哪些 gem 的清单”存档**。README「依赖安装」节的 `gem install …` 命令行清单，就是从此 Gemfile 推导而来（展开 `github-pages:232` 的运行时依赖后去重，得到 49 个 gem 的快照）。
+- **不删除也可**；若以后改用 `bundle install --path vendor/bundle` 标准流程，它就是入口文件。
+
 ### 2. Python 3 + PyYAML（校验与基线脚本）
 
 ```bash
@@ -214,7 +228,36 @@ baseurl: ""
 url: ""
 ```
 
-另需空桩目录 `.tools/msys2/usr/bin/`（内放空的 `msys-2.0.dll` 文件即可，欺骗 native 探测）与 `.tools/parts/`（仅翻译分片时用，可空）。
+另需空桩目录 `.tools/msys2/usr/bin/`（内放空的 `msys-2.0.dll` 文件即可）与 `.tools/parts/`（仅翻译分片时用，见下文）。
+
+#### `msys-2.0.dll`（空文件）的真实作用
+
+**位置**：`.tools/msys2/usr/bin/msys-2.0.dll`（0 字节空文件）。
+
+**作用**：**欺骗 `http_parser.rb` 等 native gem 的运行时探测，使其误以为 MSYS2 已安装，从而跳过“加载 `msys-2.0.dll` 失败 → 尝试编译 native 扩展”的分支。**
+
+背景：
+- RubyInstaller 便携版不带 MSYS2 工具链，无法编译 C 扩展。
+- `http_parser.rb`（jekyll 依赖链中）在 `require` 时会 `FindLibrary('msys-2.0.dll')`；找不到就回退到“编译 native extension”，导致 `gem install` 或 `require` 报错。
+- 因为我们用 `$LOAD_PATH` 直接加载**已预编译好的 gem**（gem 包里已含 `x64-mingw-ucrt` 预编译二进制），根本不需要 MSYS2 编译。放一个空桩文件，让探测“找到文件”（Windows `LoadLibrary` 只检查文件存在性，不校验内容），从而跳过编译分支，直接用预编译二进制。
+
+**验证**：删掉该文件后跑 `build.rb`，会在 `require 'http_parser'` 时抛 `LoadError: cannot load such file -- msys-2.0.dll` 或触发编译尝试失败。**此文件必须保留。**
+
+### `.tools/parts/` 目录：来源、现状与后续处理
+
+**来源**：初次全量翻译时，`scripts/split_for_translation.py` 将超 1700 行的大文件按逻辑块切片生成。每个大文件产生：
+- 英文切片：`part-01.md`、`part-02.md` …（原文分段）
+- 中文切片：`part-01.zh.md`、`part-02.zh.md` …（并行翻译产出）
+- 清单：`manifest.json`（记录每文件的切片边界 `start`/`end` 行号与目录映射）
+
+现状（实测）：**90 个文件、3.2 MB**，包含 `cppguide`（5 片）、`go/best-practices`（3 片）、`go/decisions`（1 片）、`docguide/style`（1 片）等的中英切片。**所有译文已通过 `merge_translations.py` 无损合并回 `zh-docs/`**（如 `cppguide.md` 5949 行 = 5 片之和），译文完整无缺。
+
+**下次增量翻译是否需要**：
+- **不需要**。现有文件的增量修改直接对已合并的 `zh-docs/<文件>.md` 做 diff 落笔，完全不依赖 `.tools/parts/`。
+- **上游新增大文件**（>1700 行）时：重新运行 `split_for_translation.py` 会**自动重建**目录结构与切片，覆盖旧内容（或先手动 `rm -rf .tools/parts` 再跑）。
+- `manifest.json` 仅在**合并阶段**被 `merge_translations.py` 读取，合并完成后即无用。
+
+**可删除吗**：**可删除**（`rm -rf .tools/parts`），不影响任何后续流程。保留也无害，仅占 3.2 MB 磁盘。
 
 ## 上游增量同步流程
 
